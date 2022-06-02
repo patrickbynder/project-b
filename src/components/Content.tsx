@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import { API } from '../helpers/api';
 import { Item } from '../types';
@@ -18,6 +19,15 @@ const Content = () => {
                 console.log('ERROR: ', errorMessage);
                 setIsLoading(false);
             });
+    }, []);
+
+    const FetchData = async () => {
+        const results = await axios.get('/.netlify/functions/helloWorld');
+        console.log(results);
+    };
+
+    useEffect(() => {
+        FetchData();
     }, []);
 
     return (
