@@ -23,9 +23,7 @@ const Content = () => {
 
     const [message, setMessage] = useState('text');
     const FetchData = async () => {
-        const results = await axios.get(
-            'http://localhost:8888/.netlify/functions/helloWorld'
-        );
+        const results = await axios.get('/.netlify/functions/helloWorld');
         console.log(results.data.message);
         setMessage(results.data.message);
     };
