@@ -21,9 +21,13 @@ const Content = () => {
             });
     }, []);
 
+    const [message, setMessage] = useState('text');
     const FetchData = async () => {
-        const results = await axios.get('/.netlify/functions/helloWorld');
-        console.log(results);
+        const results = await axios.get(
+            'http://localhost:8888/.netlify/functions/helloWorld'
+        );
+        console.log(results.data.message);
+        setMessage(results.data.message);
     };
 
     useEffect(() => {
@@ -31,19 +35,29 @@ const Content = () => {
     }, []);
 
     return (
-        <div>
-            {loading || items.length === 0 ? (
-                <div>Loading... </div>
-            ) : (
-                <div>
-                    {items
-                        .sort((a, b) => (a.name.first > b.name.first ? 1 : -1))
-                        .map((person: Item) => (
-                            <ShowItem key={person.login.uuid} item={person} />
-                        ))}
-                </div>
-            )}
-        </div>
+        <>
+            <div>
+                <h1>{message}</h1>
+            </div>{' '}
+            <div>
+                {loading || items.length === 0 ? (
+                    <div>Loading... </div>
+                ) : (
+                    <div>
+                        {items
+                            .sort((a, b) =>
+                                a.name.first > b.name.first ? 1 : -1
+                            )
+                            .map((person: Item) => (
+                                <ShowItem
+                                    key={person.login.uuid}
+                                    item={person}
+                                />
+                            ))}
+                    </div>
+                )}
+            </div>
+        </>
     );
 };
 
